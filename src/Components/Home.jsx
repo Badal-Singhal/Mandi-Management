@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const Home = () => {
     const navigate=useNavigate();
     const location=useLocation();
-    console.log(location);
+    
 
     useEffect(()=>{
       if(location.state && location.state.message){
