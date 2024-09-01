@@ -18,6 +18,10 @@ const Navbar = ({ isAuthenticated }) => {
     window.location.reload();
   };
 
+  const HandleUpdateProfile=()=>{
+    navigate("/update-Profile")
+  }
+
   return (
     <nav className="navbar navbar-dark bg-dark">
       <div className="container-fluid">
@@ -57,9 +61,9 @@ const Navbar = ({ isAuthenticated }) => {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <button className="active" aria-current="page" data-bs-dismiss="offcanvas" onClick={HandleUpdateProfile}>
                   Update Profile
-                </a>
+                </button>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">

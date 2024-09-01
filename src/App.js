@@ -12,6 +12,7 @@ import Login from "./Components/Login";
 import PrivateRoute from "./Components/PrivateRoute";
 import { useState } from "react";
 import Parchi from "./Components/Parchi";
+import UpdateProfile from "./Components/UpdateProfile";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,6 +42,10 @@ function App() {
       path: "/parchi",
       element: <Parchi/>,
     },
+    {
+      path:"/update-Profile",
+      element: <UpdateProfile/>
+    }
   ];
   return (
     <div>

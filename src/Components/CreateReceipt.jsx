@@ -91,17 +91,24 @@ const CreateReceipt = () => {
   };
 
   const HandleOnCreateParchi = () => {
-    const user_id = localStorage.getItem("user_id");
-    let obj = { alldheri, user_id: user_id,parchi_no : parchi_no };
-    createRecipt(obj).then((res) => {
-      if (res.message === "Success") {
-        toast("Data Inserted Successfully");
-        localStorage.setItem('parchiNumber',Number(localStorage.getItem('parchiNumber'))+1);
-      }
-    });
+    if (alldheri.length === 0) {
+      return toast("Dheri is Empty");
+    } else {
+      const user_id = localStorage.getItem("user_id");
+      let obj = { alldheri, user_id: user_id, parchi_no: parchi_no };
+      createRecipt(obj).then((res) => {
+        if (res.message === "Success") {
+          toast("Data Inserted Successfully");
+          localStorage.setItem(
+            "parchiNumber",
+            Number(localStorage.getItem("parchiNumber")) + 1
+          );
+        }
+      });
 
-    setDheri((val) => []);
-    navigate("/Parchi", { state: { dheri: alldheri } });
+      setDheri((val) => []);
+      navigate("/Parchi", { state: { dheri: alldheri } });
+    }
   };
 
   return (
@@ -119,6 +126,7 @@ const CreateReceipt = () => {
             id="firmName"
             name="firmName"
             aria-describedby="firmNameHelp"
+            required
           />
         </div>
         <div className="mb-3">
@@ -132,6 +140,7 @@ const CreateReceipt = () => {
             aria-label="Select Crop"
             onChange={HandleCropSelect}
             defaultValue=""
+            required
           >
             <option value="" disabled>
               Select Crop...
@@ -146,11 +155,12 @@ const CreateReceipt = () => {
             Rate
           </label>
           <input
-            type="text"
+            type="number"
             name="rate"
             className="form-control"
             id="rate"
             aria-describedby="rateHelp"
+            required
           />
         </div>
         {isSarsoSelect && (
@@ -160,7 +170,7 @@ const CreateReceipt = () => {
                 Lab
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="lab"
                 name="lab"
@@ -174,7 +184,7 @@ const CreateReceipt = () => {
                 Amount
               </label>
               <input
-                type="text"
+                type="number"
                 value={amount}
                 className="form-control"
                 name="amount"
@@ -188,7 +198,7 @@ const CreateReceipt = () => {
                 Final Rate
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="finalRate"
                 name="finalRate"
@@ -204,11 +214,12 @@ const CreateReceipt = () => {
             Estimated Weight
           </label>
           <input
-            type="text"
+            type="number"
             className="form-control"
             id="weight"
             name="weight"
             aria-describedby="weightHelp"
+            required
           />
         </div>
         <div className="mb-3">

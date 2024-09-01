@@ -71,6 +71,66 @@
   font-weight: 500;
 }
 
+.purchase-book-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.purchase-book-table th,
+.purchase-book-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.purchase-book-table th {
+  background-color: #f4f4f4;
+}
+
+/* Pagination Controls */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination-btn {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.pagination-btn.active {
+  background: #007bff;
+  color: #fff;
+}
+
+.pagination-btn.arrow {
+  background: none;
+  border: none;
+  font-size: 16px;
+}
+
+.pagination-btn.arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Rows Per Page Dropdown */
+.rows-per-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.rows-per-page-dropdown {
+  margin-left: 8px;
+}
+
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
   .purchase-book-table {
@@ -87,4 +147,18 @@
   #heading{
     font-size: large;
   }
+
+  .purchase-book-table {
+    font-size: 12px;
+  }
+
+  .pagination-btn {
+    padding: 4px 6px;
+  }
+
+  .rows-per-page-dropdown {
+    font-size: 12px;
+  }
 }
+
+

@@ -107,4 +107,22 @@ export const sentPDF=async (data)=>{
   }
 }
 
+export const updateProfile = async (data) => {
+  try {
+    const token=localStorage.getItem("token")
+    const response = await instance.post("/updateProfile", data,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log(response);
+    return response.data; 
+  } catch (error) {
+    console.error("Error:", error);
+    throw error; 
+  }
+};
+
 
