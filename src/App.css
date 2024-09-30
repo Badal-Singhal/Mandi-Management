@@ -131,7 +131,35 @@
   margin-left: 8px;
 }
 
-/* Responsive design for smaller screens */
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black; 
+  font-size: 16px;
+}
+
+.delete-btn:hover {
+  color: white; 
+}
+
+.parchi-link-btn {
+  background: none; 
+  border: none; 
+  color: inherit; 
+  font-size: 14px; 
+  padding: 0; 
+  text-decoration: none; 
+  cursor: pointer; 
+}
+
+.parchi-link-btn:hover {
+  color: #007bff; 
+  text-decoration: underline;
+  background-color: white; 
+}
+
+
 @media (max-width: 768px) {
   .purchase-book-table {
     display: block;
@@ -142,6 +170,24 @@
   .purchase-book-table th,
   .purchase-book-table td {
     white-space: nowrap;
+  }
+
+  .mobile-btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+  }
+
+ 
+  .mobile-btn-container .btn {
+    width: auto; 
+    padding: 6px 12px; 
+    font-size: 12px; 
+    margin: 0; 
+  }
+
+  .parchi-link-btn {
+    font-size: 12px; 
   }
 
   #heading{

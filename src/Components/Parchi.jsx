@@ -102,7 +102,7 @@ const Parchi = () => {
         item.firmName || "",
         item.dheri || "",
         item.weight?.toString() || "",
-        item.rate?.toString() || "",
+        item.dheri!=='Sarso'?item.rate?.toString():item.finalRate?.toString() || "",
         item.remarks || "",
       ];
 
@@ -186,7 +186,7 @@ const Parchi = () => {
                 <td>{val.firmName}</td>
                 <td>{val.dheri}</td>
                 <td>{val.weight}</td>
-                <td>{val.rate}</td>
+                <td>{val.dheri!=='Sarso'?val.rate:val.finalRate}</td>
                 <td>{val.remarks}</td>
               </tr>
             ))}

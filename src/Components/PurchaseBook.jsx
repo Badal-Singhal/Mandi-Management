@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./../App.css"; // Ensure your CSS file is imported
 import { useNavigate } from "react-router-dom";
-import { getPurchaseBook } from "../API/Auth";
+import { getPurchaseBook, showParchi } from "../API/Auth";
 
 const PurchaseBook = () => {
   const navigate = useNavigate();
   const [purchaseBook, setPurchaseBook] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  
 
   const handleOnGoBackClick = () => {
     navigate("/");
@@ -48,6 +49,17 @@ const PurchaseBook = () => {
     setCurrentPage(1); // Reset to the first page when items per page changes
   };
 
+  const handleShowParchi=(val)=>{
+    console.log(val);
+    let obj={}
+    obj['photo_path']=val.photo_path
+    showParchi(obj).then((res)=>{
+      let base64data=res.data
+      navigate('/view-image', { state: { base64data} });
+    })
+    
+  }
+
   // Pagination Controls
   const maxPagesToShow = 4;
   const pageRange = Math.floor(maxPagesToShow / 2);
@@ -64,7 +76,7 @@ const PurchaseBook = () => {
         <div>
           <h2 id="heading">Purchase Book</h2>
         </div>
-        <div>
+        <div className="mobile-btn-container">
           <button
             onClick={handleOnGoBackClick}
             className="btn btn-secondary me-2"
@@ -91,6 +103,7 @@ const PurchaseBook = () => {
             <th>Anumanit vazan</th>
             <th>Dar</th>
             <th>Remarks</th>
+            <th>View Photo</th>
           </tr>
         </thead>
         <tbody>
@@ -99,12 +112,13 @@ const PurchaseBook = () => {
               <tr key={index}>
                 <td>{indexOfFirstItem + index + 1}</td>
                 <td>{val.created_at.split("T")[0]}</td>
-                <td>{val.parchi_no}</td>
+                <td><button onClick={()=>handleShowParchi(val)} className="parchi-link-btn">{val.parchi_no}</button></td>
                 <td>{val.supplierName}</td>
                 <td>{val.dheri}</td>
                 <td>{val.weight}</td>
-                <td>{val.rate}</td>
+                <td>{val.dheri !== "Sarso" ? val.rate : val.finalRate}</td>
                 <td>{val.remarks}</td>
+                <td><button onClick={()=>handleShowParchi(val)} className="parchi-link-btn">View Image</button></td>
               </tr>
             ))
           ) : (
@@ -126,10 +140,15 @@ const PurchaseBook = () => {
         >
           &lt;
         </button>
-        {Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index).map((pageNumber) => (
+        {Array.from(
+          { length: endPage - startPage + 1 },
+          (_, index) => startPage + index
+        ).map((pageNumber) => (
           <button
             key={pageNumber}
-            className={`pagination-btn ${pageNumber === currentPage ? "active" : ""}`}
+            className={`pagination-btn ${
+              pageNumber === currentPage ? "active" : ""
+            }`}
             onClick={() => handlePageChange(pageNumber)}
           >
             {pageNumber}

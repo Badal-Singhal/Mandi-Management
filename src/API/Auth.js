@@ -71,6 +71,24 @@ export const getPurchaseBook = async (data) => {
   }
 };
 
+export const showParchi = async (data) => {
+  try {
+    const token=localStorage.getItem("token")
+    const response = await instance.post("/showParchi", data,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log(response);
+    return response.data; 
+  } catch (error) {
+    console.error("Error:", error);
+    throw error; 
+  }
+};
+
 export const getProfileInfo = async (data) => {
   try {
     const token=localStorage.getItem("token")

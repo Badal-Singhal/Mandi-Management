@@ -16,6 +16,9 @@ const instance = axios.create({
 // in package.json file
 // "homepage": "http://34.131.74.233/",
 
+//inside script obj
+// "start": "PORT=8080 react-scripts start",
+
   
 
   

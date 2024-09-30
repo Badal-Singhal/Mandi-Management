@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import { createRecipt } from "../API/Auth";
 import { toast, ToastContainer } from "react-toastify";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const CreateReceipt = () => {
   const [isSarsoSelect, setIsSarsoSelect] = useState(false);
@@ -90,6 +92,11 @@ const CreateReceipt = () => {
     setAmount(Number(e.target.value));
   };
 
+  const handleDelete = (item) => {
+    const updatedDheri = alldheri.filter((d) => d !== item);
+    setDheri(updatedDheri);
+  };
+
   const HandleOnCreateParchi = () => {
     if (alldheri.length === 0) {
       return toast("Dheri is Empty");
@@ -150,7 +157,7 @@ const CreateReceipt = () => {
             <option value="Sarso">सरसों/Sarso</option>
           </select>
         </div>
-        <div className="mb-3">
+        {!isSarsoSelect && <div className="mb-3">
           <label htmlFor="rate" className="form-label">
             Rate
           </label>
@@ -162,7 +169,7 @@ const CreateReceipt = () => {
             aria-describedby="rateHelp"
             required
           />
-        </div>
+        </div>}
         {isSarsoSelect && (
           <div>
             <div className="mb-3">
@@ -245,14 +252,14 @@ const CreateReceipt = () => {
             id="inputGroupFile02"
           />
         </div>
-        <div className="d-flex mb-3">
+        <div className="d-flex mb-3 ">
           <button
-            className="btn btn-secondary mx-2 btn-lg"
+            className="btn btn-secondary mx-2 "
             onClick={HandleGoBackClick}
           >
             Go Back
           </button>
-          <button type="submit" className="btn btn-success mx-2 btn-lg">
+          <button type="submit" className="btn btn-success mx-2">
             Create Dheri
           </button>
         </div>
@@ -266,9 +273,10 @@ const CreateReceipt = () => {
             <th>Anumanit vazan</th>
             <th>Dar</th>
             <th>Remarks</th>
+            <th>Action</th>
           </tr>
         </thead>
-        {alldheri.length != 0 && (
+        {alldheri.length !== 0 && (
           <tbody>
             {alldheri.map((val, index) => (
               <tr key={index}>
@@ -276,8 +284,17 @@ const CreateReceipt = () => {
                 <td>{val.firmName}</td>
                 <td>{val.dheri}</td>
                 <td>{val.weight}</td>
-                <td>{val.rate}</td>
+                <td>{val.dheri!=='Sarso'?val.rate:val.finalRate}</td>
                 <td>{val.remarks}</td>
+                <td>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(val)}
+                  title="Delete this entry"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+                </td>
               </tr>
             ))}
           </tbody>

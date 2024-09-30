@@ -13,6 +13,7 @@ import PrivateRoute from "./Components/PrivateRoute";
 import { useState } from "react";
 import Parchi from "./Components/Parchi";
 import UpdateProfile from "./Components/UpdateProfile";
+import ViewImage from "./Components/ViewImage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,6 +46,10 @@ function App() {
     {
       path:"/update-Profile",
       element: <UpdateProfile/>
+    },
+    {
+      path:"/view-image",
+      element: <ViewImage/>
     }
   ];
   return (
