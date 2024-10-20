@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import { register } from "../API/Auth";
+import { toast, ToastContainer } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
 
-  const HandleReceiptFormSubmit = (e) => {
+  const HandleReceiptFormSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     let obj = {};
@@ -19,7 +20,11 @@ const Register = () => {
     // })
     //   .then((res) => res.json())
     //   .then((data) => console.log(data));
-    const result=register(formData);
+    const result= await register(formData);
+    console.log(result);
+    // toast(result.message);
+    e.target.reset();
+    navigate('/login',{ state: { message: result.message }});
   };
 
   const HandleGoBackClick = (e) => {
@@ -28,6 +33,7 @@ const Register = () => {
 
   return (
     <div className="custom-receipt-container">
+    <ToastContainer/>
       <form className="receipt-form" onSubmit={HandleReceiptFormSubmit}>
         <h2>Register</h2>
         <div className="mb-3">

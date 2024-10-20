@@ -1,14 +1,25 @@
 import instance from "./constant";
 
 export const register = async (data) => {
-  await instance
-    .post("/register", data)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return "Error - " + error;
-    });
+
+  try {
+    const response = await instance.post("/register", data);
+    console.log(response);
+    return response.data; 
+  } catch (error) {
+    console.error("Error:", error);
+    throw error; 
+  }
+
+
+  // await instance
+  //   .post("/register", data)
+  //   .then((response) => {
+  //     return response.data;
+  //   })
+  //   .catch((error) => {
+  //     return "Error - " + error;
+  //   });
 };
 
 // export const login = async (data) => {

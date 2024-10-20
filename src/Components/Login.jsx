@@ -1,14 +1,22 @@
 import { toast, ToastContainer } from "react-toastify";
 import { login } from "../API/Auth";
 import 'react-toastify/dist/ReactToastify.css';
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = ({setIsAuthenticated}) => {
 
   const myForm=useRef(null);
   const navigate=useNavigate();
-  
+  const location=useLocation();
+    
+
+    useEffect(()=>{
+      if(location.state && location.state.message){
+        toast(location.state.message);
+        navigate(location.pathname, { replace: true, state: {} });
+      }
+    },[location])
 
 
   const HandleReceiptFormSubmit = async(e) => {
