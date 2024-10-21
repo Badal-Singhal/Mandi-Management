@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import { createRecipt } from "../API/Auth";
@@ -12,8 +12,53 @@ const CreateReceipt = () => {
   const [lab, setLab] = useState("");
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
+  const [position,setPosition]=useState();
+  const [isLocationAllowed,setIsLocationAllowed]=useState(true);
 
-  console.log(alldheri);
+  useEffect(()=>{
+
+  checkLocationPermission();
+  },[])
+
+  console.log(position);
+
+  const checkLocationPermission = async () => {
+    try {
+      const result = await navigator.permissions.query({ name: 'geolocation' });
+      console.log(result);
+  
+      if (result.state === 'granted') {
+        getLocation();
+      } else if (result.state === 'prompt') {
+        getLocation();
+      } else if (result.state === 'denied') {
+        setIsLocationAllowed(val=>false);
+        alert('You have blocked location services. Please enable location from browser settings.');
+      }
+    } catch (error) {
+      console.error('Error checking geolocation permission:', error);
+    }
+  };
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setPosition(val=>position);
+          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        },
+        (error) => {
+          setIsLocationAllowed(val=>false);
+          console.error('Error getting location:', error);
+        }
+      );
+    } else {
+      alert('Geolocation is not supported by your browser.');
+    }
+  };
+
+  
   let date = new Date();
 
   let parchi_no = `${date.getFullYear()}/${(date.getUTCMonth() + 1)
@@ -22,6 +67,8 @@ const CreateReceipt = () => {
     Number(localStorage.getItem("parchiNumber")) + 1
   }`;
   console.log(parchi_no);
+
+  
 
   const HandleCropSelect = (e) => {
     if (e.target.value === "Sarso") {
@@ -53,6 +100,10 @@ const CreateReceipt = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     let obj = {};
+    if(position){
+      obj["latitude"]= position.coords.latitude;
+      obj["longitude"]= position.coords.longitude;
+    }
 
     const processFormData = (formData) => {
       return new Promise((resolve, reject) => {
@@ -229,6 +280,18 @@ const CreateReceipt = () => {
             required
           />
         </div>
+        {!isLocationAllowed && <div className="mb-3">
+          <label htmlFor="remarks" className="form-label">
+            Mandi's Location
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="location"
+            name="location"
+            aria-describedby="remarksHelp"
+          />
+        </div>}
         <div className="mb-3">
           <label htmlFor="remarks" className="form-label">
             Remarks
