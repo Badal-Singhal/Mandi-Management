@@ -2,9 +2,14 @@ import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import { register } from "../API/Auth";
 import { toast, ToastContainer } from "react-toastify";
+import { useState } from "react";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [role,setRole]=useState();
+  
+  console.log(role);
+
 
   const HandleReceiptFormSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +27,7 @@ const Register = () => {
     //   .then((data) => console.log(data));
     const result= await register(formData);
     console.log(result);
+    toast(result.message);
     // toast(result.message);
     e.target.reset();
     navigate('/login',{ state: { message: result.message }});
@@ -31,11 +37,35 @@ const Register = () => {
     navigate("/login");
   };
 
+  const HandleRoleChange=(e)=>{
+    setRole((val)=>e.target.value);
+  }
+
   return (
     <div className="custom-receipt-container">
     <ToastContainer/>
       <form className="receipt-form" onSubmit={HandleReceiptFormSubmit}>
         <h2>Register</h2>
+        <div className="mb-3">
+          <label htmlFor="userName" className="form-label">
+            Role
+          </label>
+          <select
+            className="form-select"
+            id="role"
+            name="role"
+            aria-label="Select Role"
+            onChange={HandleRoleChange}
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select Role...
+            </option>
+            <option value="trader">व्यापारी/Trader</option>
+            <option value="accountant">मुनीम/Accountant</option>
+          </select>
+        </div>
         <div className="mb-3">
           <label htmlFor="userName" className="form-label">
             Email/Phone Number

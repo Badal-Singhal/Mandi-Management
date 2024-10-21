@@ -1,7 +1,7 @@
 import { toast, ToastContainer } from "react-toastify";
 import { login } from "../API/Auth";
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = ({setIsAuthenticated}) => {
@@ -9,7 +9,6 @@ const Login = ({setIsAuthenticated}) => {
   const myForm=useRef(null);
   const navigate=useNavigate();
   const location=useLocation();
-    
 
     useEffect(()=>{
       if(location.state && location.state.message){
@@ -43,11 +42,32 @@ const Login = ({setIsAuthenticated}) => {
     navigate('/register');
   }
 
+  
+
   return (
     <div className="custom-receipt-container">
       <ToastContainer/>
       <form ref={myForm} className="receipt-form" onSubmit={HandleReceiptFormSubmit}>
         <h2>Login</h2>
+        <div className="mb-3">
+          <label htmlFor="userName" className="form-label">
+            Role
+          </label>
+          <select
+            className="form-select"
+            id="role"
+            name="role"
+            aria-label="Select Role"
+            defaultValue=""
+            required
+          >
+            <option value="" disabled>
+              Select Role...
+            </option>
+            <option value="trader">व्यापारी/Trader</option>
+            <option value="accountant">मुनीम/Accountant</option>
+          </select>
+        </div>
         <div className="mb-3">
           <label htmlFor="userName" className="form-label">
             Email/Phone Number
