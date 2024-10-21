@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
-import { register } from "../API/Auth";
+import { checkGstNumber, register } from "../API/Auth";
 import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
 
 const Register = () => {
   const navigate = useNavigate();
   const [role,setRole]=useState();
+  const [isAccountant,setIsAccountant]=useState(false);
+  const [isValidated,setIsValidated]=useState(false);
+  const [gstNumber,setGstNumber]=useState();
   
   console.log(role);
 
@@ -39,6 +42,27 @@ const Register = () => {
 
   const HandleRoleChange=(e)=>{
     setRole((val)=>e.target.value);
+    if(e.target.value==="accountant"){
+      setIsAccountant(val=>true);
+    }else{
+      setIsAccountant(val=>false);
+      setIsValidated(val=>false);
+    }
+  }
+
+  const checkGstNumberExist=async ()=>{
+    let obj={};
+    obj["gstNumber"]=gstNumber;
+    const result=await checkGstNumber(obj);
+    console.log(result);
+  }
+
+  const HandleOnValidate=()=>{
+    checkGstNumberExist();
+  }
+
+  const HandleGstNumberChange=(e)=>{
+    setGstNumber(e.target.value);
   }
 
   return (
@@ -66,6 +90,7 @@ const Register = () => {
             <option value="accountant">मुनीम/Accountant</option>
           </select>
         </div>
+        {(!isAccountant || isValidated) &&<>
         <div className="mb-3">
           <label htmlFor="userName" className="form-label">
             Email/Phone Number
@@ -76,6 +101,7 @@ const Register = () => {
             id="userName"
             name="userName"
             aria-describedby="userNameHelp"
+            required
           />
         </div>
         <div className="mb-3">
@@ -88,8 +114,11 @@ const Register = () => {
             id="password"
             name="password"
             aria-describedby="userNameHelp"
+            required
           />
         </div>
+        </>}
+        {!isAccountant &&<>
         <div className="mb-3">
           <label htmlFor="firmName" className="form-label">
             Firm's Name
@@ -99,6 +128,7 @@ const Register = () => {
             className="form-control"
             name="firmName"
             aria-describedby="firmNameHelp"
+            required
           />
         </div>
         <div className="mb-3">
@@ -111,8 +141,10 @@ const Register = () => {
             id="firmAddress"
             name="firmAddress"
             aria-describedby="firmNameHelp"
+            required
           />
         </div>
+        </>}
         <div className="mb-3">
           <label htmlFor="rate" className="form-label">
             Mobile Number
@@ -122,6 +154,7 @@ const Register = () => {
             name="mobileNumber"
             className="form-control"
             id="mobileNumber"
+            required
           />
         </div>
         <div className="mb-3">
@@ -134,8 +167,12 @@ const Register = () => {
             id="GST Number"
             name="gstNumber"
             aria-describedby="weightHelp"
+            onChange={HandleGstNumberChange}
+            required
           />
+          {isAccountant && <button onClick={HandleOnValidate}>Validate</button>}
         </div>
+        {!isAccountant && <>
         <div className="mb-3">
           <label htmlFor="weight" className="form-label">
             PAN Number
@@ -146,6 +183,7 @@ const Register = () => {
             id="panNumber"
             name="panNumber"
             aria-describedby="weightHelp"
+            required
           />
         </div>
         <div className="mb-3">
@@ -159,6 +197,7 @@ const Register = () => {
             id="pan_photo"
           />
         </div>
+        </>}
         <div className="d-flex mb-3">
           <button
             className="btn btn-secondary mx-2 btn-lg"

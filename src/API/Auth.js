@@ -22,6 +22,17 @@ export const register = async (data) => {
   //   });
 };
 
+export const checkGstNumber = async (data) => {
+  try {
+    const response = await instance.post("/checkGstNumber", data);
+    console.log(response);
+    return response.data; 
+  } catch (error) {
+    console.error("Error:", error);
+    throw error; 
+  }
+};
+
 // export const login = async (data) => {
 //     await instance
 //       .post("/login", data)
