@@ -19,10 +19,8 @@ const PurchaseBook = () => {
   };
 
   useEffect(() => {
-    let user_id = localStorage.getItem("user_id");
-    let obj = {
-      user_id: user_id,
-    };
+    let obj = {};
+    
     getPurchaseBook(obj).then((res) => {
       setPurchaseBook(res.data);
       let map = new Map();

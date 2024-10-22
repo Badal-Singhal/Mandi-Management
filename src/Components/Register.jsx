@@ -9,7 +9,7 @@ const Register = () => {
   const [role,setRole]=useState();
   const [isAccountant,setIsAccountant]=useState(false);
   const [isValidated,setIsValidated]=useState(false);
-  const [gstNumber,setGstNumber]=useState();
+  const [gstNumber,setGstNumber]=useState('');
   
   console.log(role);
 
@@ -58,7 +58,9 @@ const Register = () => {
   }
 
   const HandleOnValidate=()=>{
-    checkGstNumberExist();
+    if(gstNumber!==''){
+      checkGstNumberExist();
+    }
   }
 
   const HandleGstNumberChange=(e)=>{
@@ -145,7 +147,7 @@ const Register = () => {
           />
         </div>
         </>}
-        <div className="mb-3">
+        {(!isAccountant || isValidated) &&<div className="mb-3">
           <label htmlFor="rate" className="form-label">
             Mobile Number
           </label>
@@ -156,7 +158,7 @@ const Register = () => {
             id="mobileNumber"
             required
           />
-        </div>
+        </div>}
         <div className="mb-3">
           <label htmlFor="weight" className="form-label">
             GST Number
@@ -170,7 +172,7 @@ const Register = () => {
             onChange={HandleGstNumberChange}
             required
           />
-          {isAccountant && <button onClick={HandleOnValidate}>Validate</button>}
+          {isAccountant && <button type="button" onClick={HandleOnValidate}>Validate</button>}
         </div>
         {!isAccountant && <>
         <div className="mb-3">

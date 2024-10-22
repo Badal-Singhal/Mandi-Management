@@ -63,7 +63,7 @@ const CreateReceipt = () => {
 
   let parchi_no = `${date.getFullYear()}/${(date.getUTCMonth() + 1)
     .toString()
-    .padStart(2, "0")}/BANDHU-${localStorage.getItem("user_id")}/${
+    .padStart(2, "0")}/BANDHU/${
     Number(localStorage.getItem("parchiNumber")) + 1
   }`;
   console.log(parchi_no);
@@ -152,8 +152,7 @@ const CreateReceipt = () => {
     if (alldheri.length === 0) {
       return toast("Dheri is Empty");
     } else {
-      const user_id = localStorage.getItem("user_id");
-      let obj = { alldheri, user_id: user_id, parchi_no: parchi_no };
+      let obj = { alldheri, parchi_no: parchi_no };
       createRecipt(obj).then((res) => {
         if (res.message === "Success") {
           toast("Data Inserted Successfully");

@@ -19,7 +19,7 @@ const Parchi = () => {
   const date = new Date();
   let parchi_no = `${date.getFullYear()}/${(date.getUTCMonth() + 1)
     .toString()
-    .padStart(2, "0")}/BANDHU-${localStorage.getItem("user_id")}/${Number(
+    .padStart(2, "0")}/BANDHU/${Number(
     localStorage.getItem("parchiNumber")
   )}`;
 
@@ -28,8 +28,7 @@ const Parchi = () => {
   }, []);
 
   const HandleProfileInfo = () => {
-    const data = localStorage.getItem("user_id");
-    let obj = { user_id: data };
+    let obj = {};
     getProfileInfo(obj).then((res) => setProfile(res.data || []));
   };
 

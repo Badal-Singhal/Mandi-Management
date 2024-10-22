@@ -9,7 +9,7 @@ const UpdateProfile = () => {
     const [loading, setLoading] = useState(true); // Add a loading state
 
     useEffect(() => {
-        let obj = { user_id: localStorage.getItem("user_id") };
+        let obj = {};
         getProfileInfo(obj).then((res) => {
             setProfile(res.data);
             setLoading(false); // Set loading to false when data is fetched

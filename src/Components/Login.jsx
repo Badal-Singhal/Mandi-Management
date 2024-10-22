@@ -26,7 +26,6 @@ const Login = ({setIsAuthenticated}) => {
     toast(result.message);
     if(result.resu){
       localStorage.setItem("token",result.data.token);
-      localStorage.setItem("user_id",result.data.user_id)
       setIsAuthenticated(true);
       navigate('/',{ state: { message: result.message }});
     }

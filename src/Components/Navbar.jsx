@@ -7,13 +7,12 @@ const Navbar = ({ isAuthenticated }) => {
   const navigate = useNavigate();
 
   const HandleProfileInfo = () => {
-    const data = localStorage.getItem("user_id");
-    let obj = { user_id: data };
+    
+    let obj = {};
     getProfileInfo(obj).then((res) => setProfile((val) => res.data));
   };
 
   const HandleLogout = () => {
-    localStorage.clear("user_id");
     localStorage.clear("token");
     window.location.reload();
   };
