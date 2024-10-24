@@ -103,6 +103,10 @@ const CreateReceipt = () => {
     if(position){
       obj["latitude"]= position.coords.latitude;
       obj["longitude"]= position.coords.longitude;
+      obj["location"]=null;
+    }else{
+      obj["latitude"]= null;
+      obj["longitude"]= null;
     }
 
     const processFormData = (formData) => {
